@@ -272,10 +272,15 @@ def admin_revogar_entrega():
         return jsonify({"ok": True, "revogado": token})
     return jsonify({"erro": "token não encontrado"}), 404
 
+# ── Quiz ───────────────────────────────────────────────────────────────────
+@app.route("/quiz")
+def quiz():
+    return send_from_directory("static", "quiz_ita.html")
+
 # ── Página inicial ─────────────────────────────────────────────────────────
 @app.route("/")
 def index():
-    return redirect("https://www.instagram.com/issoteafeta.oficial")
+    return redirect(url_for("quiz"))
 
 # ── Init ───────────────────────────────────────────────────────────────────
 with app.app_context():
