@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B9AAA">
+<title>Qual é o seu Elemento? — Isso Te Afeta ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:   #1B9AAA;
+  --teal-l: #4DBDCA;
+  --teal-xl:#E0F7FA;
+  --gold:   #F4A825;
+  --gold-l: #F9CC6A;
+  --gold-xl:#FFF8E1;
+  --orange: #E8682A;
+  --green:  #4CAF50;
+  --green-d:#2E7D32;
+  --green-l:#A5D6A7;
+  --green-xl:#E8F5E9;
+  --rose:   #C878C8;
+  --rose-l: #E1BEE7;
+  --cream:  #FFFDF5;
+  --warm:   #FFF8F0;
+  --dark:   #1A2E1A;
+  --gr:     #5A6A5A;
+  --gr-l:   #9AAA9A;
+  --gr-x:   #E8F0E8;
+  --font-d: 'Playfair Display', Georgia, serif;
+  --font-b: 'Nunito', system-ui, sans-serif;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--font-b);
+  background:var(--cream);
+  color:var(--dark);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Background orgânico ── */
+.bg-organic{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 40% at 10% 20%, rgba(27,154,170,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 80%, rgba(76,175,80,.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(244,168,37,.05) 0%, transparent 60%),
+    var(--cream);
+}
+/* Folhas decorativas */
+.bg-organic::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(2px 2px at 15% 25%, rgba(76,175,80,.3) 0%,transparent 100%),
+    radial-gradient(2px 2px at 80% 15%, rgba(244,168,37,.4) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 60% 70%, rgba(27,154,170,.3) 0%,transparent 100%),
+    radial-gradient(2px 2px at 30% 80%, rgba(200,120,200,.25) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 55%, rgba(232,104,42,.25) 0%,transparent 100%);
+}
+
+/* ── Shell ── */
+.shell{
+  position:relative;z-index:1;
+  max-width:480px;margin:0 auto;
+  padding:0 20px 40px;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+
+/* ── Screens ── */
+.screen{display:none;flex-direction:column;flex:1}
+.screen.active{display:flex;animation:fadeUp .5s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── BRAND HEADER ── */
+.brand-header{
+  text-align:center;padding:28px 0 16px;
+}
+.brand-logo-wrap{
+  display:inline-flex;flex-direction:column;align-items:center;gap:4px;
+}
+.brand-tagline{
+  font-family:var(--font-d);
+  font-size:2rem;font-weight:400;font-style:italic;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--gold) 50%,var(--orange) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1.2;
+}
+.brand-name{
+  font-size:.7rem;font-weight:800;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gr-l);
+}
+.brand-icon{font-size:1.5rem;margin-bottom:2px}
+
+/* ── LANDING ── */
+#screen-landing{align-items:center;text-align:center;padding-top:12px}
+
+.land-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--teal-xl);border:1px solid rgba(27,154,170,.2);
+  border-radius:20px;padding:5px 14px;
+  font-size:.72rem;font-weight:700;color:var(--teal);
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;
+}
+.land-title{
+  font-family:var(--font-d);font-size:2.2rem;font-weight:600;
+  color:var(--dark);line-height:1.2;margin-bottom:8px;
+}
+.land-title em{font-style:italic;color:var(--teal)}
+.land-sub{
+  font-size:.92rem;color:var(--gr);line-height:1.6;
+  margin-bottom:28px;max-width:320px;font-weight:400;
+}
+
+/* Elementos preview */
+.els-preview{
+  display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;
+}
+.el-chip{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:20px;font-size:.75rem;font-weight:700;
+  border:1.5px solid transparent;transition:transform .2s;cursor:default;
+}
+.el-chip:hover{transform:translateY(-2px)}
+
+.btn-start{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-l) 100%);
+  color:#fff;border:none;border-radius:50px;
+  padding:16px 36px;font-size:1rem;font-weight:800;
+  font-family:var(--font-b);cursor:pointer;
+  box-shadow:0 6px 24px rgba(27,154,170,.35);
+  transition:all .2s;width:100%;max-width:300px;
+  letter-spacing:.02em;
+}
+.btn-start:active{transform:scale(.97)}
+.land-trust{
+  margin-top:16px;font-size:.75rem;color:var(--gr-l);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+
+/* ── CAPTURA ── */
+#screen-capture{align-items:center;text-align:center;padding-top:20px}
+.cap-emoji{font-size:2.5rem;margin-bottom:12px}
+.cap-title{
+  font-family:var(--font-d);font-size:1.7rem;font-weight:600;
+  color:var(--dark);margin-bottom:6px;line-height:1.3;
+}
+.cap-sub{font-size:.88rem;color:var(--gr);margin-bottom:24px;line-height:1.5}
+.form-group{width:100%;max-width:340px;margin-bottom:12px}
+.form-input{
+  width:100%;padding:14px 16px;
+  background:var(--warm);border:1.5px solid rgba(27,154,170,.2);
+  border-radius:14px;color:var(--dark);font-size:.95rem;
+  font-family:var(--font-b);outline:none;
+  transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;
+}
+.form-input::placeholder{color:var(--gr-l)}
+.form-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(27,154,170,.1)}
+.btn-continue{
+  background:linear-gradient(135deg,var(--teal),var(--teal-l));
+  color:#fff;border:none;border-radius:50px;
+  padding:14px 28px;font-size:.95rem;font-weight:800;
+  font-family:var(--font-b);cursor:pointer;
+  width:100%;max-width:340px;margin-top:6px;
+  box-shadow:0 5px 20px rgba(27,154,170,.3);transition:all .2s;
+}
+.btn-continue:active{transform:scale(.98)}
+.cap-privacy{font-size:.72rem;color:var(--gr-l);margin-top:10px}
+
+/* ── QUIZ ── */
+#screen-quiz{padding:16px 0 32px}
+.quiz-tabs{
+  display:flex;gap:4px;margin-bottom:18px;overflow-x:auto;
+  scrollbar-width:none;padding-bottom:2px;
+}
+.quiz-tabs::-webkit-scrollbar{display:none}
+.quiz-tab{
+  flex-shrink:0;padding:5px 10px;border-radius:20px;
+  font-size:.7rem;font-weight:700;border:none;background:var(--gr-x);
+  color:var(--gr);cursor:default;
+}
+.quiz-tab.active{background:var(--teal);color:#fff}
+.quiz-tab.done{background:var(--green-xl);color:var(--green-d)}
+
+.quiz-card{
+  background:var(--warm);border:1.5px solid rgba(27,154,170,.15);
+  border-radius:20px;padding:24px 20px;margin-bottom:16px;
+  box-shadow:0 2px 16px rgba(0,0,0,.06);
+}
+.quiz-num{
+  font-size:.68rem;font-weight:800;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:8px;
+}
+.quiz-q{
+  font-family:var(--font-d);font-size:1.3rem;font-weight:600;
+  color:var(--dark);line-height:1.4;
+}
+
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{
+  background:var(--warm);border:1.5px solid rgba(0,0,0,.08);
+  border-radius:14px;padding:12px 14px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;
+}
+.opt:active{transform:scale(.98)}
+.opt.selected{background:var(--teal-xl);border-color:var(--teal)}
+.opt-ico{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--gr-x);display:flex;align-items:center;
+  justify-content:center;font-size:1.1rem;flex-shrink:0;
+  transition:background .18s;
+}
+.opt.selected .opt-ico{background:rgba(27,154,170,.15)}
+.opt-txt{font-size:.88rem;color:var(--gr);line-height:1.4;font-weight:400}
+.opt.selected .opt-txt{color:var(--dark);font-weight:600}
+
+.btn-next{
+  background:linear-gradient(135deg,var(--teal),var(--teal-l));
+  color:#fff;border:none;border-radius:50px;
+  padding:14px;font-size:.95rem;font-weight:800;
+  font-family:var(--font-b);cursor:pointer;width:100%;
+  box-shadow:0 5px 20px rgba(27,154,170,.3);
+  transition:all .2s;opacity:0;pointer-events:none;margin-top:14px;
+}
+.btn-next.show{opacity:1;pointer-events:auto}
+.btn-next:active{transform:scale(.98)}
+
+/* ── LOADING ── */
+#screen-loading{
+  align-items:center;justify-content:center;
+  text-align:center;padding:40px 20px;
+}
+.load-anim{font-size:3.5rem;animation:spin 4s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.load-title{
+  font-family:var(--font-d);font-size:1.6rem;font-weight:600;
+  color:var(--dark);margin:18px 0 6px;
+}
+.load-sub{font-size:.85rem;color:var(--gr);margin-bottom:28px}
+.load-steps{display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px}
+.load-step{
+  display:flex;align-items:center;gap:10px;
+  font-size:.82rem;color:var(--gr-l);padding:8px 12px;
+  border-radius:10px;transition:all .3s;
+}
+.load-step.done{color:var(--teal);background:var(--teal-xl)}
+.load-step-ico{
+  width:22px;height:22px;border-radius:50%;
+  border:1.5px solid var(--gr-x);display:flex;align-items:center;
+  justify-content:center;font-size:.65rem;flex-shrink:0;transition:all .3s;
+}
+.load-step.done .load-step-ico{
+  background:var(--teal);border-color:var(--teal);color:#fff;font-weight:800;
+}
+
+/* ── RESULTADO ── */
+#screen-result{padding:20px 0 40px}
+.res-brand{
+  text-align:center;margin-bottom:16px;
+  font-size:.68rem;font-weight:800;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gr-l);
+}
+.res-card{
+  background:var(--warm);border-radius:20px;padding:24px 20px;
+  text-align:center;margin-bottom:14px;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  border:1.5px solid rgba(27,154,170,.12);
+}
+.res-ico{font-size:4.5rem;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.res-el-name{
+  font-family:var(--font-d);font-size:2.4rem;font-weight:700;
+  margin:8px 0 4px;line-height:1;
+}
+.res-sub{font-size:.82rem;color:var(--gr);letter-spacing:.04em}
+
+.res-teaser{
+  background:var(--warm);border-radius:16px;padding:18px;
+  margin-bottom:12px;border-left:4px solid var(--teal);
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.res-teaser-title{
+  font-family:var(--font-d);font-size:.95rem;font-weight:600;
+  color:var(--teal);margin-bottom:6px;
+}
+.res-teaser-text{font-size:.86rem;color:var(--gr);line-height:1.6}
+
+/* Blur */
+.blur-wrap{
+  position:relative;border-radius:16px;overflow:hidden;
+  margin-bottom:14px;border:1.5px solid rgba(0,0,0,.07);
+}
+.blur-content{
+  padding:18px;filter:blur(5px);user-select:none;pointer-events:none;
+  background:var(--warm);
+}
+.blur-content p{font-size:.86rem;color:var(--gr);line-height:1.6;margin-bottom:6px}
+.blur-overlay{
+  position:absolute;inset:0;
+  background:rgba(255,253,245,.65);backdrop-filter:blur(2px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+}
+.blur-lock{font-size:1.6rem}
+.blur-overlay-txt{
+  font-size:.8rem;font-weight:700;color:var(--dark);text-align:center;
+  line-height:1.4;
+}
+
+/* CTA Principal */
+.cta-main{
+  background:linear-gradient(135deg,var(--teal-xl),var(--green-xl));
+  border:1.5px solid rgba(27,154,170,.2);border-radius:20px;
+  padding:22px 20px;margin-bottom:12px;text-align:center;
+}
+.cta-old{font-size:.8rem;color:var(--gr-l);text-decoration:line-through;margin-bottom:2px}
+.cta-price{
+  font-family:var(--font-d);font-size:2.4rem;font-weight:700;
+  color:var(--teal);line-height:1;margin-bottom:4px;
+}
+.cta-price span{font-size:1rem;font-weight:400}
+.cta-desc{font-size:.78rem;color:var(--gr);margin-bottom:16px;line-height:1.5}
+.btn-cta{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--gold) 100%);
+  color:#fff;border:none;border-radius:50px;
+  padding:15px 28px;font-size:.95rem;font-weight:800;
+  font-family:var(--font-b);cursor:pointer;width:100%;
+  box-shadow:0 6px 24px rgba(27,154,170,.3);transition:all .2s;
+  letter-spacing:.02em;
+}
+.btn-cta:active{transform:scale(.98)}
+.cta-guarantee{
+  font-size:.7rem;color:var(--gr-l);margin-top:8px;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+}
+
+/* Divisor */
+.div-ou{
+  display:flex;align-items:center;gap:10px;margin:10px 0;
+}
+.div-ou::before,.div-ou::after{
+  content:'';flex:1;height:1px;background:rgba(0,0,0,.08);
+}
+.div-ou span{
+  font-size:.68rem;color:var(--gr-l);letter-spacing:.1em;
+  text-transform:uppercase;white-space:nowrap;
+}
+
+/* Combo */
+.cta-combo{
+  background:linear-gradient(135deg,var(--gold-xl),var(--warm));
+  border:1.5px solid rgba(244,168,37,.3);border-radius:20px;
+  padding:20px;margin-bottom:12px;
+}
+.combo-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--gold);color:#fff;
+  border-radius:20px;padding:4px 12px;
+  font-size:.68rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:10px;
+}
+.combo-title{
+  font-family:var(--font-d);font-size:1.2rem;font-weight:600;
+  color:var(--dark);margin-bottom:10px;line-height:1.3;
+}
+.combo-title em{font-style:italic;color:var(--orange)}
+.combo-items{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.combo-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:.8rem;color:var(--gr);
+}
+.combo-item-dot{
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.58rem;font-weight:800;flex-shrink:0;
+}
+.combo-prices{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.combo-old{font-size:.78rem;color:var(--gr-l);text-decoration:line-through}
+.combo-new{
+  font-family:var(--font-d);font-size:1.9rem;font-weight:700;
+  color:var(--orange);line-height:1;
+}
+.combo-new span{font-size:.88rem;font-weight:400}
+.combo-eco{
+  background:rgba(232,104,42,.12);color:var(--orange);
+  padding:3px 9px;border-radius:10px;font-size:.7rem;font-weight:800;
+}
+.btn-combo{
+  background:linear-gradient(135deg,var(--gold),#F0C040);
+  color:var(--dark);border:none;border-radius:50px;
+  padding:14px 24px;font-size:.92rem;font-weight:800;
+  font-family:var(--font-b);cursor:pointer;width:100%;
+  box-shadow:0 5px 20px rgba(244,168,37,.3);transition:all .2s;
+}
+.btn-combo:active{transform:scale(.98)}
+.combo-note{font-size:.68rem;color:var(--gr-l);text-align:center;margin-top:7px}
+
+/* Upsell solo */
+.cta-solo{
+  background:var(--gr-x);border-radius:16px;padding:14px 16px;margin-bottom:14px;
+  border:1.5px solid rgba(0,0,0,.06);
+}
+.solo-title{font-size:.86rem;font-weight:700;color:var(--dark);margin-bottom:2px}
+.solo-sub{font-size:.74rem;color:var(--gr);margin-bottom:10px;line-height:1.4}
+.solo-price{
+  font-family:var(--font-d);font-size:1.3rem;font-weight:600;
+  color:var(--gr);margin-bottom:8px;
+}
+.btn-solo{
+  background:transparent;border:1.5px solid rgba(0,0,0,.15);
+  color:var(--gr);border-radius:50px;
+  padding:10px 20px;font-size:.82rem;font-weight:700;
+  font-family:var(--font-b);cursor:pointer;width:100%;transition:all .2s;
+}
+.btn-solo:active{transform:scale(.98)}
+
+/* Share */
+.share-sec{text-align:center;margin-top:4px}
+.share-lbl{font-size:.74rem;color:var(--gr-l);margin-bottom:8px}
+.share-btns{display:flex;gap:7px;justify-content:center}
+.btn-share{
+  background:var(--warm);border:1.5px solid rgba(0,0,0,.08);
+  border-radius:10px;padding:9px 14px;font-size:.78rem;font-weight:600;
+  color:var(--gr);cursor:pointer;font-family:var(--font-b);
+  display:flex;align-items:center;gap:5px;transition:all .18s;
+}
+.btn-share:active{transform:scale(.97)}
+
+/* ── Footer brand ── */
+.footer-brand{
+  text-align:center;padding:20px 0 8px;
+  font-size:.72rem;color:var(--gr-l);
+}
+.footer-brand strong{color:var(--teal)}
+</style>
+</head>
+<body>
+
+<div class="bg-organic"></div>
+<div class="shell">
+
+<!-- ══ TELA 1: LANDING ══════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-landing">
+
+  <div class="brand-header">
+    <div class="brand-logo-wrap">
+      <div class="brand-icon">☯</div>
+      <div class="brand-tagline">Isso Te Afeta</div>
+      <div class="brand-name">Energia & Autoconhecimento</div>
+    </div>
+  </div>
+
+  <div class="land-badge">✦ Teste gratuito · 3 minutos</div>
+  <h1 class="land-title">Qual energia<br><em>governa</em> sua vida?</h1>
+  <p class="land-sub">Descubra seu Elemento e entenda como ele molda seus relacionamentos, seu lar e quem você realmente é.</p>
+
+  <div class="els-preview">
+    <div class="el-chip" style="background:rgba(76,175,80,.1);border-color:rgba(76,175,80,.3);color:#2E7D32">🌿 Madeira</div>
+    <div class="el-chip" style="background:rgba(232,104,42,.1);border-color:rgba(232,104,42,.3);color:#C0392B">🔥 Fogo</div>
+    <div class="el-chip" style="background:rgba(244,168,37,.1);border-color:rgba(244,168,37,.3);color:#7B5800">🌍 Terra</div>
+    <div class="el-chip" style="background:rgba(90,106,90,.08);border-color:rgba(90,106,90,.2);color:#5A6A5A">⚪ Metal</div>
+    <div class="el-chip" style="background:rgba(27,154,170,.1);border-color:rgba(27,154,170,.3);color:#1B9AAA">💧 Água</div>
+  </div>
+
+  <button class="btn-start" onclick="goTo('capture')">Descobrir meu elemento ✨</button>
+  <div class="land-trust">🌿 Gratuito · 10 perguntas · Resultado imediato</div>
+
+  <div class="footer-brand" style="margin-top:auto;padding-top:32px">
+    <strong>@issoteafeta.oficial</strong> · Energia & Autoconhecimento
+  </div>
+</div>
+
+<!-- ══ TELA 2: CAPTURA ══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-capture">
+  <div class="brand-header">
+    <div class="brand-logo-wrap">
+      <div class="brand-tagline">Isso Te Afeta</div>
+    </div>
+  </div>
+  <div class="cap-emoji">✨</div>
+  <h2 class="cap-title">Onde envio<br>seu resultado?</h2>
+  <p class="cap-sub">Preencha abaixo para iniciar o teste e receber sua análise energética completa.</p>
+  <div class="form-group">
+    <input type="text" class="form-input" id="userName" placeholder="Seu primeiro nome" autocomplete="given-name">
+  </div>
+  <div class="form-group">
+    <input type="email" class="form-input" id="userEmail" placeholder="Seu melhor e-mail" autocomplete="email">
+  </div>
+  <button class="btn-continue" onclick="startQuiz()">Iniciar o teste →</button>
+  <div class="cap-privacy">🔒 Seus dados são privados. Sem spam, prometemos.</div>
+</div>
+
+<!-- ══ TELA 3: QUIZ ══════════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-quiz">
+  <div class="brand-header" style="padding:16px 0 10px">
+    <div class="brand-tagline" style="font-size:1.3rem">Isso Te Afeta</div>
+  </div>
+
+  <!-- Tabs de progresso -->
+  <div class="quiz-tabs" id="quizTabs">
+    <div class="quiz-tab active" id="tab1">01</div>
+    <div class="quiz-tab" id="tab2">02</div>
+    <div class="quiz-tab" id="tab3">03</div>
+    <div class="quiz-tab" id="tab4">04</div>
+    <div class="quiz-tab" id="tab5">05</div>
+    <div class="quiz-tab" id="tab6">06</div>
+    <div class="quiz-tab" id="tab7">07</div>
+    <div class="quiz-tab" id="tab8">08</div>
+    <div class="quiz-tab" id="tab9">09</div>
+    <div class="quiz-tab" id="tab10">10</div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="quiz-num" id="qNum">Pergunta 01 de 10</div>
+    <div class="quiz-q" id="qText"></div>
+  </div>
+
+  <div class="options" id="optionsGrid"></div>
+  <button class="btn-next" id="btnNext" onclick="nextQ()">Próxima →</button>
+</div>
+
+<!-- ══ TELA 4: LOADING ══════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-loading">
+  <div class="brand-header">
+    <div class="brand-tagline" style="font-size:1.4rem">Isso Te Afeta</div>
+  </div>
+  <div class="load-anim">☯</div>
+  <h2 class="load-title">Lendo sua energia...</h2>
+  <p class="load-sub">Analisando suas respostas com os princípios dos 5 Elementos</p>
+  <div class="load-steps">
+    <div class="load-step" id="ls1"><div class="load-step-ico">✓</div><span>Mapeando seu elemento dominante</span></div>
+    <div class="load-step" id="ls2"><div class="load-step-ico">✓</div><span>Identificando padrões energéticos</span></div>
+    <div class="load-step" id="ls3"><div class="load-step-ico">✓</div><span>Calculando compatibilidades</span></div>
+    <div class="load-step" id="ls4"><div class="load-step-ico">✓</div><span>Preparando seu mapa pessoal</span></div>
+  </div>
+</div>
+
+<!-- ══ TELA 5: RESULTADO ════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-result">
+  <div class="res-brand">✦ @issoteafeta.oficial · Seu resultado chegou ✦</div>
+
+  <div class="res-card">
+    <div class="res-ico" id="resIco"></div>
+    <div class="res-el-name" id="resNome"></div>
+    <div class="res-sub" id="resSub"></div>
+  </div>
+
+  <div class="res-teaser" id="resTeaser"></div>
+
+  <div class="blur-wrap">
+    <div class="blur-content">
+      <p>Sua energia governa diretamente seus relacionamentos, sua prosperidade e os ambientes que te fazem bem — ou te drenam.</p>
+      <p>As cores que você usa, a posição do seu quarto, os objetos que guarda sem saber por quê... tudo isso está conectado ao seu elemento. E existe um ritual simples que pode transformar o fluxo de energia da sua casa ainda hoje.</p>
+    </div>
+    <div class="blur-overlay">
+      <div class="blur-lock">🔒</div>
+      <div class="blur-overlay-txt">Desbloqueie seu<br>Mapa Energético Completo</div>
+    </div>
+  </div>
+
+  <!-- CTA Mapa -->
+  <div class="cta-main">
+    <div class="cta-old">De R$ 97,00</div>
+    <div class="cta-price"><span>R$ </span>27<span>,00</span></div>
+    <div class="cta-desc">Mapa Energético Pessoal completo · 7 seções · Acesso imediato por e-mail</div>
+    <button class="btn-cta" id="btnCta">Desbloquear meu Mapa Energético ✨</button>
+    <div class="cta-guarantee">🛡 Garantia de 7 dias · Satisfação ou devolução</div>
+  </div>
+
+  <!-- Divisor combo -->
+  <div class="div-ou"><span>ou leve os dois com desconto</span></div>
+
+  <!-- Combo -->
+  <div class="cta-combo">
+    <div class="combo-badge">🔥 Mais completo</div>
+    <div class="combo-title">Mapa Energético<br>+ <em>Desafio 21 Dias</em></div>
+    <div class="combo-items">
+      <div class="combo-item">
+        <div class="combo-item-dot" style="background:var(--teal);color:#fff">✓</div>
+        Mapa Energético Pessoal completo (7 seções)
+      </div>
+      <div class="combo-item">
+        <div class="combo-item-dot" style="background:var(--gold);color:#fff">✓</div>
+        Desafio 21 Dias com ação diária para o seu elemento
+      </div>
+      <div class="combo-item">
+        <div class="combo-item-dot" style="background:var(--green);color:#fff">✓</div>
+        Rituais práticos de manhã, semana e mês
+      </div>
+      <div class="combo-item">
+        <div class="combo-item-dot" style="background:var(--rose);color:#fff">✓</div>
+        Guia de cores, cômodos e relacionamentos por elemento
+      </div>
+    </div>
+    <div class="combo-prices" style="flex-direction:column;gap:4px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <div class="combo-old" style="font-size:.9rem">R$ 134,00</div>
+        <div style="color:var(--orange);font-size:1rem;font-weight:800">→</div>
+        <div class="combo-new"><span>R$ </span>47<span>,00</span></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <div class="combo-eco">💰 Você economiza R$ 87,00</div>
+        <div class="combo-eco" style="background:rgba(232,104,42,.12);color:var(--orange)">65% de desconto</div>
+      </div>
+    </div>
+    <button class="btn-combo" id="btnCombo">Quero o Combo Completo ✨</button>
+    <div class="combo-note">🛡 Garantia 7 dias · Acesso imediato · Entrega por e-mail</div>
+  </div>
+
+  <!-- Solo desafio -->
+  <div class="cta-solo">
+    <div class="solo-title">📅 Já tenho o Mapa — quero só o Desafio 21 Dias</div>
+    <div class="solo-sub">Guia diário com ação prática para o seu elemento durante 21 dias.</div>
+    <div class="solo-price">R$ 37,00</div>
+    <button class="btn-solo" id="btnDesafio">Quero só o Desafio →</button>
+  </div>
+
+  <!-- Share -->
+  <div class="share-sec">
+    <div class="share-lbl">Compartilhe seu resultado ✨</div>
+    <div class="share-btns">
+      <button class="btn-share" onclick="shareWA()">💬 WhatsApp</button>
+      <button class="btn-share" onclick="shareIG()">📸 Stories</button>
+      <button class="btn-share" onclick="copyLnk()">🔗 Copiar</button>
+    </div>
+  </div>
+
+  <div class="footer-brand" style="margin-top:24px">
+    <strong>@issoteafeta.oficial</strong> · Energia & Autoconhecimento
+  </div>
+</div>
+
+</div><!-- /shell -->
+
+<script>
+// ══ DADOS ══════════════════════════════════════════════════════════════════
+const perguntas = [
+  { texto: "Quando você entra em um ambiente novo, o que você percebe primeiro?",
+    opcoes:[
+      {t:"O quanto o espaço tem potencial de crescimento e vida",i:"🌱",el:"madeira"},
+      {t:"A energia das pessoas e se o lugar é animado",i:"✨",el:"fogo"},
+      {t:"Se o ambiente me dá estabilidade e conforto",i:"🏡",el:"terra"},
+      {t:"A organização, limpeza e clareza do espaço",i:"🤍",el:"metal"},
+      {t:"A fluidez e a sensação de leveza que o lugar transmite",i:"🌊",el:"agua"},
+    ]},
+  { texto: "Como as pessoas ao seu redor costumam descrevê-la?",
+    opcoes:[
+      {t:"Criativa, cheia de projetos e sempre crescendo",i:"🌿",el:"madeira"},
+      {t:"Intensa, carismática e impossível de ignorar",i:"🔥",el:"fogo"},
+      {t:"Confiável, acolhedora e sempre presente",i:"🌍",el:"terra"},
+      {t:"Precisa, disciplinada e de princípios fortes",i:"💎",el:"metal"},
+      {t:"Profunda, intuitiva e difícil de decifrar",i:"💧",el:"agua"},
+    ]},
+  { texto: "Qual destes cenários descreve melhor como você recarrega sua energia?",
+    opcoes:[
+      {t:"Trabalhando em um novo projeto ou aprendendo algo novo",i:"📖",el:"madeira"},
+      {t:"Rindo muito com pessoas que amo",i:"🎊",el:"fogo"},
+      {t:"Em casa, com rotina e silêncio familiar",i:"☕",el:"terra"},
+      {t:"Organizando alguma coisa ou tendo tempo só minha",i:"🗂️",el:"metal"},
+      {t:"Perto de água: praia, banho demorado, chuva",i:"🌧️",el:"agua"},
+    ]},
+  { texto: "Quando algo sai do seu controle, sua primeira reação é...",
+    opcoes:[
+      {t:"Criar um plano imediatamente e agir",i:"📋",el:"madeira"},
+      {t:"Expressar o que sente com intensidade",i:"💬",el:"fogo"},
+      {t:"Buscar estabilidade e apoio nas pessoas próximas",i:"🤝",el:"terra"},
+      {t:"Isolar-se para analisar e encontrar a solução lógica",i:"🔍",el:"metal"},
+      {t:"Deixar o tempo passar e sentir antes de agir",i:"🌙",el:"agua"},
+    ]},
+  { texto: "Qual destes ambientes faz você se sentir mais você mesma?",
+    opcoes:[
+      {t:"Um jardim ou espaço com muita natureza e verde",i:"🌳",el:"madeira"},
+      {t:"Um lugar vibrante, com luz e movimento",i:"🕯️",el:"fogo"},
+      {t:"Uma casa aconchegante com cheiros gostosos",i:"🏠",el:"terra"},
+      {t:"Um espaço minimalista, limpo e bem organizado",i:"🤍",el:"metal"},
+      {t:"Perto de água — lago, cachoeira, praia",i:"🏖️",el:"agua"},
+    ]},
+  { texto: "Como você se relaciona com seus objetivos e sonhos?",
+    opcoes:[
+      {t:"Tenho muitos e vivo buscando crescer cada vez mais",i:"🚀",el:"madeira"},
+      {t:"Meus sonhos são grandes e eu inspiro outros com eles",i:"⭐",el:"fogo"},
+      {t:"Prefiro objetivos concretos que me deem segurança",i:"🎯",el:"terra"},
+      {t:"Planejo com cuidado e sigo com disciplina",i:"📐",el:"metal"},
+      {t:"Deixo que as coisas fluam e confio no processo",i:"🌀",el:"agua"},
+    ]},
+  { texto: "Qual dessas situações te causa mais desconforto?",
+    opcoes:[
+      {t:"Ficar estagnada sem ver progresso",i:"😤",el:"madeira"},
+      {t:"Ser ignorada ou não ter voz",i:"😔",el:"fogo"},
+      {t:"Instabilidade e mudanças repentinas",i:"😰",el:"terra"},
+      {t:"Bagunça, falta de clareza ou injustiça",i:"😣",el:"metal"},
+      {t:"Pressão, pressa e superficialidade",i:"😶",el:"agua"},
+    ]},
+  { texto: "Qual destes presentes você amaria receber?",
+    opcoes:[
+      {t:"Um livro, curso ou experiência nova",i:"📚",el:"madeira"},
+      {t:"Um jantar especial com quem amo",i:"🍷",el:"fogo"},
+      {t:"Algo útil para a casa ou um spa day",i:"🧖",el:"terra"},
+      {t:"Um item de qualidade, atemporal e elegante",i:"💍",el:"metal"},
+      {t:"Uma viagem para lugar que inspira reflexão",i:"🌏",el:"agua"},
+    ]},
+  { texto: "Na sua casa, o que mais te incomoda quando não está certo?",
+    opcoes:[
+      {t:"Falta de plantas ou vida — parece sem energia",i:"🌱",el:"madeira"},
+      {t:"Iluminação ruim — espaço escuro me apaga",i:"💡",el:"fogo"},
+      {t:"Desarrumação — não consigo relaxar assim",i:"🏡",el:"terra"},
+      {t:"Excesso de coisas — quero só o essencial",i:"🗑️",el:"metal"},
+      {t:"Ausência de água ou espelhos — falta fluidez",i:"🪞",el:"agua"},
+    ]},
+  { texto: "Qual frase ressoa mais com você neste momento da sua vida?",
+    opcoes:[
+      {t:'"Estou crescendo e isso me enche de vida"',i:"🌿",el:"madeira"},
+      {t:'"Quero brilhar e fazer a diferença"',i:"✨",el:"fogo"},
+      {t:'"Busco paz, presença e equilíbrio"',i:"☮️",el:"terra"},
+      {t:'"Preciso de clareza, verdade e propósito"',i:"🔮",el:"metal"},
+      {t:'"Quero me conhecer em profundidade"',i:"🌊",el:"agua"},
+    ]},
+];
+
+const elementos = {
+  madeira:{
+    nome:"Elemento Madeira",ico:"🌿",cor:"#2E7D32",
+    sub:"O elemento do crescimento e da vitalidade",
+    teaser:{
+      titulo:"Sua energia é expansiva e cheia de vida",
+      texto:"Você carrega uma força natural de crescimento que poucos percebem. O Elemento Madeira governa a visão, a criatividade e o impulso de evoluir. Há algo no seu espaço que pode estar bloqueando exatamente esse fluxo — e o Mapa Energético mostra o que é."
+    },
+    cta:"#comprar-mapa",combo:"#comprar-combo",desafio:"#comprar-desafio"
+  },
+  fogo:{
+    nome:"Elemento Fogo",ico:"🔥",cor:"#C0392B",
+    sub:"O elemento da paixão e da iluminação",
+    teaser:{
+      titulo:"Sua presença transforma tudo ao redor",
+      texto:"Você tem um carisma que aquece os ambientes e as pessoas. O Elemento Fogo governa a alegria, o reconhecimento e as conexões profundas. Quando esse fogo não tem o espaço certo para queimar, ele pode se voltar contra você — e existe um sinal na sua casa que revela isso."
+    },
+    cta:"#comprar-mapa",combo:"#comprar-combo",desafio:"#comprar-desafio"
+  },
+  terra:{
+    nome:"Elemento Terra",ico:"🌍",cor:"#8B6914",
+    sub:"O elemento do equilíbrio e da abundância",
+    teaser:{
+      titulo:"Você é o porto seguro de todos ao redor",
+      texto:"Sua energia tem uma qualidade rara: a de ancorar e nutrir. O Elemento Terra governa a estabilidade, o lar e a prosperidade. Há um padrão energético comum no lar de pessoas com sua energia que drena silenciosamente tudo que você constrói — e o Mapa mostra como resolver."
+    },
+    cta:"#comprar-mapa",combo:"#comprar-combo",desafio:"#comprar-desafio"
+  },
+  metal:{
+    nome:"Elemento Metal",ico:"⚪",cor:"#5D6D8A",
+    sub:"O elemento da clareza e da precisão",
+    teaser:{
+      titulo:"Você sente tudo com uma intensidade que poucos entendem",
+      texto:"Sua mente é afiada e seus princípios são sólidos. O Elemento Metal governa a integridade, a clareza mental e a capacidade de cortar o que não serve. Existe um detalhe na organização do seu espaço que pode estar impedindo você de manifestar o que merece."
+    },
+    cta:"#comprar-mapa",combo:"#comprar-combo",desafio:"#comprar-desafio"
+  },
+  agua:{
+    nome:"Elemento Água",ico:"💧",cor:"#1B9AAA",
+    sub:"O elemento da sabedoria e da intuição",
+    teaser:{
+      titulo:"Você tem uma profundidade que transforma vidas",
+      texto:"Sua intuição é um presente raro. O Elemento Água governa a sabedoria, os ciclos e a capacidade de fluir por qualquer situação. Quando a energia da Água não está equilibrada no seu espaço, ela pode virar estagnação — o Mapa mostra como ativar o fluxo."
+    },
+    cta:"#comprar-mapa",combo:"#comprar-combo",desafio:"#comprar-desafio"
+  },
+};
+
+// ══ ESTADO ═════════════════════════════════════════════════════════════════
+let userName="", userEmail="", currentQ=0;
+let answers=[], scores={madeira:0,fogo:0,terra:0,metal:0,agua:0};
+
+// ══ NAVEGAÇÃO ═══════════════════════════════════════════════════════════════
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ CAPTURA ═════════════════════════════════════════════════════════════════
+function startQuiz(){
+  const n=document.getElementById('userName').value.trim();
+  if(!n){document.getElementById('userName').focus();return;}
+  userName=n; userEmail=document.getElementById('userEmail').value.trim();
+  currentQ=0; scores={madeira:0,fogo:0,terra:0,metal:0,agua:0}; answers=[];
+  renderQ(); goTo('quiz');
+}
+
+// ══ QUIZ ════════════════════════════════════════════════════════════════════
+function renderQ(){
+  const q=perguntas[currentQ];
+  // Atualizar tabs
+  for(let i=1;i<=10;i++){
+    const t=document.getElementById('tab'+i);
+    t.className='quiz-tab';
+    if(i<currentQ+1) t.classList.add('done');
+    else if(i===currentQ+1) t.classList.add('active');
+  }
+  document.getElementById('qNum').textContent=`Pergunta ${String(currentQ+1).padStart(2,'0')} de 10`;
+  document.getElementById('qText').textContent=q.texto;
+  const grid=document.getElementById('optionsGrid');
+  grid.innerHTML='';
+  q.opcoes.forEach((op,i)=>{
+    const d=document.createElement('div');
+    d.className='opt';
+    d.innerHTML=`<div class="opt-ico">${op.i}</div><div class="opt-txt">${op.t}</div>`;
+    d.onclick=()=>selectOpt(i,op.el,d);
+    grid.appendChild(d);
+  });
+  document.getElementById('btnNext').classList.remove('show');
+}
+
+function selectOpt(idx,el,el_div){
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+  el_div.classList.add('selected');
+  answers[currentQ]={idx,el};
+  document.getElementById('btnNext').classList.add('show');
+}
+
+function nextQ(){
+  if(!answers[currentQ]) return;
+  scores[answers[currentQ].el]++;
+  if(currentQ<perguntas.length-1){currentQ++;renderQ();window.scrollTo({top:0,behavior:'smooth'});}
+  else showLoading();
+}
+
+// ══ LOADING ══════════════════════════════════════════════════════════════════
+function showLoading(){
+  goTo('loading');
+  ['ls1','ls2','ls3','ls4'].forEach((id,i)=>{
+    document.getElementById(id).classList.remove('done');
+    setTimeout(()=>document.getElementById(id).classList.add('done'),(i+1)*700);
+  });
+  setTimeout(showResult,3400);
+}
+
+// ══ RESULTADO ═══════════════════════════════════════════════════════════════
+function showResult(){
+  const winner=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+  const el=elementos[winner];
+  document.getElementById('resIco').textContent=el.ico;
+  document.getElementById('resNome').textContent=el.nome;
+  document.getElementById('resNome').style.color=el.cor;
+  document.getElementById('resSub').textContent=el.sub;
+  document.getElementById('resTeaser').innerHTML=`
+    <div class="res-teaser-title">✦ ${el.teaser.titulo}</div>
+    <div class="res-teaser-text">${userName ? userName+', '+el.teaser.texto[0].toLowerCase()+el.teaser.texto.slice(1) : el.teaser.texto}</div>`;
+  document.getElementById('btnCta').onclick=()=>window.location.href=el.cta;
+  document.getElementById('btnCombo').onclick=()=>window.location.href=el.combo;
+  document.getElementById('btnDesafio').onclick=()=>window.location.href=el.desafio;
+  goTo('result');
+}
+
+// ══ COMPARTILHAR ═════════════════════════════════════════════════════════════
+function shareWA(){
+  const w=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0];
+  const txt=encodeURIComponent(`Fiz o teste no @issoteafeta.oficial e descobri que meu elemento é ${elementos[w].ico} ${elementos[w].nome}! Descubra o seu também: ${window.location.href}`);
+  window.open('https://wa.me/?text='+txt,'_blank');
+}
+function shareIG(){copyLnk();alert('Link copiado! Cole nos seus Stories 📸');}
+function copyLnk(){
+  navigator.clipboard.writeText(window.location.href).then(()=>{
+    const b=document.querySelectorAll('.btn-share')[2];
+    b.textContent='✓ Copiado!';
+    setTimeout(()=>b.textContent='🔗 Copiar',2000);
+  });
+}
+</script>
+</body>
+</html>
