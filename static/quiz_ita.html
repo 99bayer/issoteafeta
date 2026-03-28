@@ -479,16 +479,17 @@ body{
     </div>
   </div>
   <div class="cap-emoji">✨</div>
-  <h2 class="cap-title">Onde envio<br>seu resultado?</h2>
-  <p class="cap-sub">Preencha abaixo para iniciar o teste e receber sua análise energética completa.</p>
+  <h2 class="cap-title">Pronta para<br>se descobrir?</h2>
+  <p class="cap-sub">Preencha seu nome para iniciar o teste. O resultado aparece na tela ao final.</p>
   <div class="form-group">
     <input type="text" class="form-input" id="userName" placeholder="Seu primeiro nome" autocomplete="given-name">
   </div>
-  <div class="form-group">
-    <input type="email" class="form-input" id="userEmail" placeholder="Seu melhor e-mail" autocomplete="email">
+  <div style="background:var(--teal-xl);border-left:3px solid var(--teal);border-radius:12px;
+    padding:12px 14px;margin-bottom:14px;font-size:.8rem;color:var(--dark);line-height:1.5;
+    width:100%;max-width:340px;text-align:left">
+    📩 Ao comprar, o material é enviado automaticamente para o <strong>e-mail usado no checkout</strong>.
   </div>
   <button class="btn-continue" onclick="startQuiz()">Iniciar o teste →</button>
-  <div class="cap-privacy">🔒 Seus dados são privados. Sem spam, prometemos.</div>
 </div>
 
 <!-- ══ TELA 3: QUIZ ══════════════════════════════════════════════════════════ -->
@@ -781,7 +782,7 @@ function goTo(id){
 function startQuiz(){
   const n=document.getElementById('userName').value.trim();
   if(!n){document.getElementById('userName').focus();return;}
-  userName=n; userEmail=document.getElementById('userEmail').value.trim();
+  userName=n; userEmail='';
   currentQ=0; scores={madeira:0,fogo:0,terra:0,metal:0,agua:0}; answers=[];
   renderQ(); goTo('quiz');
 }
