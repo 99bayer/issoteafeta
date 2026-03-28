@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B9AAA">
+<title>Seu material chegou! — Isso Te Afeta</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal:#1B9AAA;--teal-l:#4DBDCA;--teal-xl:#E0F7FA;
+  --gold:#F4A825;--gold-xl:#FFF8E1;
+  --orange:#E8682A;
+  --green:#4CAF50;--green-d:#2E7D32;--green-xl:#E8F5E9;
+  --rose:#C878C8;--rose-xl:#F3E5F5;
+  --metal:#5D6D8A;--metal-xl:#F0F2F5;
+  --cream:#FFFDF5;--warm:#FFF8F0;--dark:#1A2E1A;
+  --gr:#5A6A5A;--gr-l:#9AAA9A;--gr-x:#E8F0E8;
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'Nunito',system-ui,sans-serif;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-b);background:var(--cream);color:var(--dark);min-height:100vh}
+
+.bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 20%,rgba(27,154,170,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%,rgba(76,175,80,.07) 0%,transparent 55%),
+    var(--cream);
+}
+
+.shell{
+  position:relative;z-index:1;
+  max-width:480px;margin:0 auto;
+  padding:28px 20px 48px;
+  min-height:100vh;
+}
+
+/* Brand */
+.brand{text-align:center;margin-bottom:24px}
+.brand-nome{
+  font-family:var(--font-d);font-style:italic;font-size:1.6rem;
+  background:linear-gradient(135deg,var(--teal),var(--gold),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.brand-tag{font-size:.7rem;font-weight:800;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--gr-l);margin-top:2px}
+
+/* Hero */
+.hero{text-align:center;margin-bottom:28px}
+.hero-ico{font-size:3rem;margin-bottom:12px;
+  animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero-title{
+  font-family:var(--font-d);font-size:1.8rem;font-weight:600;
+  color:var(--dark);margin-bottom:6px;line-height:1.25;
+}
+.hero-sub{font-size:.9rem;color:var(--gr);line-height:1.5}
+
+/* Card instrução */
+.instrucao{
+  background:var(--teal-xl);border-left:4px solid var(--teal);
+  border-radius:14px;padding:14px 16px;margin-bottom:24px;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.instrucao-ico{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.instrucao-txt{font-size:.87rem;color:var(--dark);line-height:1.5}
+.instrucao-txt strong{color:var(--teal)}
+
+/* Grid de elementos */
+.el-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.el-card{
+  background:var(--warm);border:1.5px solid rgba(0,0,0,.08);
+  border-radius:16px;padding:14px 16px;
+  display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:all .18s;
+  -webkit-tap-highlight-color:transparent;
+  text-decoration:none;
+}
+.el-card:active{transform:scale(.98)}
+.el-card.disabled{opacity:.45;pointer-events:none;cursor:default}
+.el-ico{
+  width:50px;height:50px;border-radius:13px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;flex-shrink:0;
+}
+.el-info{flex:1}
+.el-nome{font-size:1rem;font-weight:800;color:var(--dark)}
+.el-sub{font-size:.78rem;color:var(--gr);margin-top:2px}
+.el-btn{
+  font-size:.75rem;font-weight:800;padding:7px 14px;
+  border-radius:20px;border:none;cursor:pointer;
+  font-family:var(--font-b);white-space:nowrap;
+  display:flex;align-items:center;gap:4px;
+}
+
+/* Estilos por elemento */
+.el-madeira .el-ico{background:#E8F5E9}
+.el-madeira .el-nome{color:#2E7D32}
+.el-madeira .el-btn{background:#2E7D32;color:#fff}
+.el-madeira:hover{border-color:#4CAF50;background:#F1FBF1}
+
+.el-fogo .el-ico{background:#FFF5F5}
+.el-fogo .el-nome{color:#C0392B}
+.el-fogo .el-btn{background:#C0392B;color:#fff}
+.el-fogo:hover{border-color:#E74C3C;background:#FFF8F8}
+
+.el-terra .el-ico{background:#FFFEF5}
+.el-terra .el-nome{color:#8B6914}
+.el-terra .el-btn{background:#C9A84C;color:#fff}
+.el-terra:hover{border-color:#C9A84C;background:#FFFFF8}
+
+.el-metal .el-ico{background:#F0F2F5}
+.el-metal .el-nome{color:#5D6D8A}
+.el-metal .el-btn{background:#5D6D8A;color:#fff}
+.el-metal:hover{border-color:#8899BB;background:#F5F7FA}
+
+.el-agua .el-ico{background:#E0F7FA}
+.el-agua .el-nome{color:#1B9AAA}
+.el-agua .el-btn{background:#1B9AAA;color:#fff}
+.el-agua:hover{border-color:#4DBDCA;background:#F0FCFD}
+
+/* Produto badge */
+.produto-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold-xl);border:1px solid rgba(244,168,37,.3);
+  border-radius:20px;padding:5px 14px;
+  font-size:.72rem;font-weight:800;color:#8B6914;
+  letter-spacing:.05em;text-transform:uppercase;margin-bottom:20px;
+}
+
+/* Aviso usado */
+.aviso-usado{
+  background:#FFF3E0;border-left:4px solid var(--orange);
+  border-radius:12px;padding:12px 14px;margin-bottom:16px;
+  font-size:.83rem;color:#7B3A00;
+}
+
+/* Footer */
+.footer{text-align:center;margin-top:28px;
+  font-size:.72rem;color:var(--gr-l)}
+.footer strong{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="shell">
+
+  <div class="brand">
+    <div class="brand-nome">Isso Te Afeta</div>
+    <div class="brand-tag">@issoteafeta.oficial · Energia & Autoconhecimento</div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-ico">🎉</div>
+    <h1 class="hero-title">Seu material chegou!</h1>
+    <p class="hero-sub">Obrigada pela confiança. Agora selecione seu elemento para baixar o material personalizado para você.</p>
+  </div>
+
+  <!-- Badge do produto -->
+  {% if produto == 'mapa' %}
+  <div style="text-align:center">
+    <div class="produto-badge">🗺️ Mapa Energético Pessoal</div>
+  </div>
+  {% elif produto == 'desafio' %}
+  <div style="text-align:center">
+    <div class="produto-badge">📅 Desafio 21 Dias</div>
+  </div>
+  {% else %}
+  <div style="text-align:center">
+    <div class="produto-badge">✨ Combo Completo — Mapa + Desafio</div>
+  </div>
+  {% endif %}
+
+  {% if usado %}
+  <div class="aviso-usado">
+    ⚠️ Este link já foi utilizado anteriormente. Se precisar baixar novamente, entre em contato pelo Instagram <strong>@issoteafeta.oficial</strong>.
+  </div>
+  {% endif %}
+
+  <div class="instrucao">
+    <div class="instrucao-ico">👇</div>
+    <div class="instrucao-txt">
+      <strong>Selecione seu elemento</strong> conforme o resultado do quiz. O download começa automaticamente.
+      {% if produto == 'combo' %}<br><br>Você receberá um arquivo <strong>.zip</strong> com o Mapa + Desafio do seu elemento.{% endif %}
+    </div>
+  </div>
+
+  <div class="el-grid">
+
+    <a href="/download/{{ token }}/Madeira" class="el-card el-madeira {% if usado %}disabled{% endif %}">
+      <div class="el-ico">🌿</div>
+      <div class="el-info">
+        <div class="el-nome">Elemento Madeira</div>
+        <div class="el-sub">Crescimento · Visão · Vitalidade</div>
+      </div>
+      <button class="el-btn">⬇ Baixar</button>
+    </a>
+
+    <a href="/download/{{ token }}/Fogo" class="el-card el-fogo {% if usado %}disabled{% endif %}">
+      <div class="el-ico">🔥</div>
+      <div class="el-info">
+        <div class="el-nome">Elemento Fogo</div>
+        <div class="el-sub">Paixão · Reconhecimento · Alegria</div>
+      </div>
+      <button class="el-btn">⬇ Baixar</button>
+    </a>
+
+    <a href="/download/{{ token }}/Terra" class="el-card el-terra {% if usado %}disabled{% endif %}">
+      <div class="el-ico">🌍</div>
+      <div class="el-info">
+        <div class="el-nome">Elemento Terra</div>
+        <div class="el-sub">Equilíbrio · Abundância · Lar</div>
+      </div>
+      <button class="el-btn">⬇ Baixar</button>
+    </a>
+
+    <a href="/download/{{ token }}/Metal" class="el-card el-metal {% if usado %}disabled{% endif %}">
+      <div class="el-ico">⚪</div>
+      <div class="el-info">
+        <div class="el-nome">Elemento Metal</div>
+        <div class="el-sub">Clareza · Precisão · Integridade</div>
+      </div>
+      <button class="el-btn">⬇ Baixar</button>
+    </a>
+
+    <a href="/download/{{ token }}/Agua" class="el-card el-agua {% if usado %}disabled{% endif %}">
+      <div class="el-ico">💧</div>
+      <div class="el-info">
+        <div class="el-nome">Elemento Água</div>
+        <div class="el-sub">Sabedoria · Intuição · Profundidade</div>
+      </div>
+      <button class="el-btn">⬇ Baixar</button>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <strong>@issoteafeta.oficial</strong> · Energia & Autoconhecimento<br>
+    Dúvidas? Fale no Instagram ✉️
+  </div>
+
+</div>
+</body>
+</html>
